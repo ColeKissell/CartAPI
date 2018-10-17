@@ -1,44 +1,37 @@
-'use strict';
+const hapi = require('hapi');
+const mongoose = require('mongoose');
 
-const Hapi = require('hapi');
-const mongojs = require('mongojs'); 
-
-const server = Hapi.server({
+const server = hapi.server({
     port: 3000,
     host: 'localhost'
-});
+})
 
-server.app.db = mongojs('hapi-rest-mongo', ['products']); 
-
-
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-        return 'Hello, world!';
-    }
-});
-
-server.route({
-    method: 'GET',
-    path: '/{name}',
-    handler: (request, h) => {
-
-        return `Hello, ${encodeURIComponent(request.params.name)}!`;
-    }
-});
-
-const init = async () => {
+const Shows = require ('./shows')
 
 
+mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store')
+
+mongoose.connection.once('open', () => {
+    console.log('connected to database')
+})
+
+const init = async() => {
+    server.route([
+        {method: 'GET',
+        path: '/',
+        handler: function (request, reply) {
+            return `<h1>Hello there</h1>`
+        }
+    },
+        {
+            method: 'GET',
+            path: '/shows',
+            handler: (req, reply) => {
+                return Shows.find();
+            }
+        }
+    ]);
     await server.start();
-    console.log(`Server running at: ${server.info.uri}`);
+    console.log (`Server running at: ${server.info.uri}`)
 };
-
-process.on('unhandledRejection', (err) => {
-
-    console.log(err);
-    process.exit(1);
-});
-
 init();

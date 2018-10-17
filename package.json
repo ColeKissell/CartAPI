@@ -1,7 +1,7 @@
 {
   "name": "hapi-practice",
   "version": "1.0.0",
-  "description": "first attempt at usiing hapi",
+  "description": "first attempt at using hapi",
   "main": "server.js",
   "scripts": {
     "test": "npm start"
@@ -9,10 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "catbox": "^10.0.3",
-    "catbox-mongodb": "^4.2.0",
     "hapi": "^17.6.0",
-    "hapi-pino": "^5.1.0",
-    "inert": "^5.1.0"
+    "hapi-mongodb": "^7.1.0",
+    "inert": "^5.1.0",
+    "joi": "^14.0.0",
+    "mongoose": "^4.0.0",
+    "boom": "^3.0.0"
   }
 }
