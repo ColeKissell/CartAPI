@@ -9,11 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "boom": "^3.0.0",
     "hapi": "^17.6.0",
     "hapi-mongodb": "^7.1.0",
     "inert": "^5.1.0",
     "joi": "^14.0.0",
     "mongoose": "^4.0.0",
-    "boom": "^3.0.0"
+    "nodemon": "^1.18.4"
   }
 }

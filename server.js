@@ -15,6 +15,22 @@ mongoose.connection.once('open', () => {
     console.log('connected to database')
 })
 
+// const newItem = async(something) => {
+//     const result = req.payload
+//     let {name, price, description, genre} = req.payload;
+//     result.name = something.name;
+//     result.price = something.price;
+//     result.description = something.description;
+//     result.genre = something.genre;
+//     const show = new Show({
+//         name,
+//         price,
+//         description,
+//         genre
+//     });
+//    return show.save();
+// }
+
 const init = async() => {
     server.route([
         {method: 'GET',
@@ -28,6 +44,21 @@ const init = async() => {
             path: '/shows',
             handler: (req, reply) => {
                 return Shows.find();
+            }
+        },
+        {
+            method: 'POST',
+            path: '/shows',
+            handler: (request, h) => {
+                const {name, price, description, genre} = request.payload;
+                const show = new Shows ({
+                    name,
+                    price,
+                    description,
+                    genre
+                }); 
+                console.log(show)
+               return show.save();
             }
         }
     ]);

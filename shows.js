@@ -5,6 +5,7 @@ const ShowsSchema = new Schema ({
     name: String,
     description: String,
     price: String,
+    genre: String
 })
 
 module.exports = mongoose.model('Shows', ShowsSchema);
