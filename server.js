@@ -64,8 +64,14 @@ const init = async() => {
             
             }
         },
-
-
+        //get the users
+        {
+            method: 'GET',
+            path: '/users',
+            handler: (req, reply) => {
+                return Users.find();
+            }
+        },
 
         // create a new user in the database
         {
