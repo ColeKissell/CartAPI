@@ -9,6 +9,7 @@ const server = hapi.server({
 const Shows = require ('./shows')
 const Users = require ('./users')
 // const Carts = require ('./carts')
+const ObjectId = mongoose.Types.ObjectId;
 
 
 mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store')
@@ -98,7 +99,7 @@ const init = async() => {
         // create a new user in the database
         {
             method: 'POST',
-            path: '/user',
+            path: '/users',
             handler: (request, h) => {
                 const {Role, Username, Email, Password, Payment, Cart, History} = request.payload;
                 const user = new Users ({
@@ -113,7 +114,42 @@ const init = async() => {
                 console.log(user)
                return user.save();
             }
+        },
+
+        {
+            method: 'DELETE',
+            path: '/users/{id}',
+            handler: (request, response) => {
+
+                
+                    Users.findByIdAndRemove(request.params.id, (error, data)=>{
+                        if(error){
+                            console.log("error in deleting yo!");
+                            throw error;
+                        } else {
+                            console.log("data all gone and deleted yo");
+                            (204);
+                
+                        }
+                    });
+                // request(Users.get(Users.read).put(Users.update).delete(Users.delete))
+                // Users.findByIdAndRemove(ObjectId(request.params.id),
+                //     (err, Users) => {
+                //     // As always, handle any potential errors:
+                //     if (err) return (500).send(err);
+                //     // We'll create a simple object to send back with a message and the id of the document that was removed
+                //     // You can really do this however you want, though.
+                //     const response = {
+                //         message: "Todo successfully deleted",
+                //         id: Users.id
+                //     };
+                //     return (200).send(response);
+                // }
+                // );
+            }
         }
+
+
     ]);
     await server.start();
     console.log (`Server running at: ${server.info.uri}`)
