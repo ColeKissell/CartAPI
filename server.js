@@ -53,12 +53,12 @@ const init = async() => {
             method: 'POST',
             path: '/shows',
             handler: (request, h) => {
-                const {name, price, description, genre} = request.payload;
+                const {Name, Price, Description, Genre} = request.payload;
                 const show = new Shows ({
-                    name,
-                    price,
-                    description,
-                    genre
+                    Name,
+                    Price,
+                    Description,
+                    Genre
                 }); 
                 console.log(show)
                return show.save();
@@ -69,12 +69,12 @@ const init = async() => {
             method: 'PUT',
             path: '/shows/{_id}',
             handler: (request, h) => {
-                const {name, price, description, genre} = request.payload;
+                const {Name, Price, Description, Genre} = request.payload;
                 const show = new Shows ({
-                    name,
-                    price,
-                    description,
-                    genre
+                    Name,
+                    Price,
+                    Description,
+                    Genre
                 }); 
                 console.log(show)
                return show.save();
@@ -98,15 +98,18 @@ const init = async() => {
             method: 'POST',
             path: '/user',
             handler: (request, h) => {
-                const {name, price, description, genre} = request.payload;
-                const show = new Shows ({
-                    name,
-                    price,
-                    description,
-                    genre
+                const {Role, Username, Email, Password, Payment, Cart, History} = request.payload;
+                const user = new Users ({
+                    Role,
+                    Username,
+                    Email,
+                    Password,
+                    Payment,
+                    Cart,
+                    History
                 }); 
-                console.log(show)
-               return show.save();
+                console.log(user)
+               return user.save();
             }
         }
     ]);
