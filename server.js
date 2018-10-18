@@ -65,21 +65,21 @@ const init = async() => {
             }
         },
         // update an existing show in the database by id
-        {
-            method: 'PUT',
-            path: '/shows/{_id}',
-            handler: (request, h) => {
-                const {Name, Price, Description, Genre} = request.payload;
-                const show = new Shows ({
-                    Name,
-                    Price,
-                    Description,
-                    Genre
-                }); 
-                console.log(show)
-               return show.save();
-            }
-        },
+        // {
+        //     method: 'PUT',
+        //     path: '/shows/{_id}',
+        //     handler: (request, h) => {
+        //         const {Name, Price, Description, Genre} = request.payload;
+        //         const show = new Shows ({
+        //             Name,
+        //             Price,
+        //             Description,
+        //             Genre
+        //         }); 
+        //         console.log(show)
+        //        return show.save();
+        //     }
+        // },
         // delete a show by the show id
 
 
@@ -116,4 +116,22 @@ const init = async() => {
     await server.start();
     console.log (`Server running at: ${server.info.uri}`)
 };
+
+Shows.findByIdAndUpdate(
+    req.params.Shows.id,
+    req.body,
+    { new: true},
+    (err, todo) => {
+        // Handle any possible database errors
+            if (err) return res.status(500).send(err);
+            return res.send(todo);
+        }
+)
+
+
+
+
+
+
+
 init();
