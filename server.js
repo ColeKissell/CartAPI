@@ -33,12 +33,14 @@ mongoose.connection.once('open', () => {
 
 const init = async() => {
     server.route([
+        // start page
         {method: 'GET',
         path: '/',
         handler: function (request, reply) {
             return `<h1>Hello there</h1>`
         }
     },
+        // get all shows
         {
             method: 'GET',
             path: '/shows',
@@ -46,9 +48,55 @@ const init = async() => {
                 return Shows.find();
             }
         },
+        // create a new show in the database
         {
             method: 'POST',
             path: '/shows',
+            handler: (request, h) => {
+                const {name, price, description, genre} = request.payload;
+                const show = new Shows ({
+                    name,
+                    price,
+                    description,
+                    genre
+                }); 
+                console.log(show)
+               return show.save();
+            }
+        },
+        // update an existing show in the database by id
+        {
+            method: 'PUT',
+            path: '/shows/{_id}',
+            handler: (request, h) => {
+                const {name, price, description, genre} = request.payload;
+                const show = new Shows ({
+                    name,
+                    price,
+                    description,
+                    genre
+                }); 
+                console.log(show)
+               return show.save();
+            }
+        },
+        // delete a show by the show id
+
+
+
+
+
+
+
+
+
+
+
+
+        // create a new user in the database
+        {
+            method: 'POST',
+            path: '/user',
             handler: (request, h) => {
                 const {name, price, description, genre} = request.payload;
                 const show = new Shows ({
