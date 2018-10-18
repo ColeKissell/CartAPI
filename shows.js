@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ShowsSchema = new Schema ({
     name: String,
     description: String,
-    price: String,
+    price: Number,
     genre: String
 })
 
