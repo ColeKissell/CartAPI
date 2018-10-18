@@ -1,6 +1,17 @@
 const hapi = require('hapi');
 const mongoose = require('mongoose');
 
+
+mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store',{useMongoClient: true})
+
+mongoose.connection.on('connected', () => {
+    console.log('connected to database')
+})
+mongoose.connection.on('err', (err) => {
+    console.log('failed to connect to database',err)
+})
+
+
 const server = hapi.server({
     port: 3000,
     host: 'localhost'
@@ -12,11 +23,7 @@ const Users = require ('./users')
 const ObjectId = mongoose.Types.ObjectId;
 
 
-const promise =mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store',{useMongoClient: true})
 
-mongoose.connection.once('open', () => {
-    console.log('connected to database')
-})
 
 
 const init = async() => {
@@ -132,7 +139,10 @@ const init = async() => {
 
 
     ]);
-    await server.start();
+    await server.start((err)=>{
+        if(err){throw err;}
+        console.log(`server is running at port ${server.info.port}`)
+    });
     console.log (`Server running at: ${server.info.uri}`)
 };
 
