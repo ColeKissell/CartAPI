@@ -97,38 +97,7 @@ const init = async() => {
             
             }
         },
-        // {
-        //     method: 'DELETE',
-        //     path: '/users/{id}',
-        //     handler: (request, response) => {
-
-                
-        //             Users.findByIdAndRemove(request.params.id, (error, data)=>{
-        //                 if(error){
-        //                     console.log("error in deleting yo!");
-        //                     throw error;
-        //                 } else {
-        //                     console.log("data all gone and deleted yo");
-        //                     (204);
-                
-        //                 }
-        //             });
-                // request(Users.get(Users.read).put(Users.update).delete(Users.delete))
-                // Users.findByIdAndRemove(ObjectId(request.params.id),
-                //     (err, Users) => {
-                //     // As always, handle any potential errors:
-                //     if (err) return (500).send(err);
-                //     // We'll create a simple object to send back with a message and the id of the document that was removed
-                //     // You can really do this however you want, though.
-                //     const response = {
-                //         message: "Todo successfully deleted",
-                //         id: Users.id
-                //     };
-                //     return (200).send(response);
-                // }
-                // );
-        //     }
-        // }
+        
 
 
     ]);
