@@ -86,23 +86,33 @@ const init = async() => {
                return user.save();
             }
         },
-
         {
             method: 'DELETE',
             path: '/users/{id}',
-            handler: (request, response) => {
+            handler: (request, h) => {
+                const foundUser = Users.findByIdAndRemove( request.params.id,(err,Users)=>
+                {if(err){return h(err).code(404)} })
+                    
+                return foundUser && 'User has been deleted!'
+            
+            }
+        },
+        // {
+        //     method: 'DELETE',
+        //     path: '/users/{id}',
+        //     handler: (request, response) => {
 
                 
-                    Users.findByIdAndRemove(request.params.id, (error, data)=>{
-                        if(error){
-                            console.log("error in deleting yo!");
-                            throw error;
-                        } else {
-                            console.log("data all gone and deleted yo");
-                            (204);
+        //             Users.findByIdAndRemove(request.params.id, (error, data)=>{
+        //                 if(error){
+        //                     console.log("error in deleting yo!");
+        //                     throw error;
+        //                 } else {
+        //                     console.log("data all gone and deleted yo");
+        //                     (204);
                 
-                        }
-                    });
+        //                 }
+        //             });
                 // request(Users.get(Users.read).put(Users.update).delete(Users.delete))
                 // Users.findByIdAndRemove(ObjectId(request.params.id),
                 //     (err, Users) => {
@@ -117,8 +127,8 @@ const init = async() => {
                 //     return (200).send(response);
                 // }
                 // );
-            }
-        }
+        //     }
+        // }
 
 
     ]);
