@@ -2,6 +2,7 @@ const hapi = require('hapi');
 const mongoose = require('mongoose');
 
 
+
 mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store',{useMongoClient: true})
 
 mongoose.connection.on('connected', () => {
@@ -17,9 +18,9 @@ const server = hapi.server({
     host: 'localhost'
 })
 
-const Shows = require ('./shows')
-const Users = require ('./users')
-// const Carts = require ('./carts')
+const Shows = require ('./models/shows')
+const Users = require ('./models/users')
+// const Carts = require ('./models/carts')
 const ObjectId = mongoose.Types.ObjectId;
 
 
@@ -27,6 +28,8 @@ const ObjectId = mongoose.Types.ObjectId;
 
 
 const init = async() => {
+
+    
     server.route([
         // start page
         {method: 'GET',
