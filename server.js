@@ -7,6 +7,8 @@ const server = hapi.server({
 })
 
 const Shows = require ('./shows')
+const Users = require ('./users')
+// const Carts = require ('./carts')
 
 
 mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store')
@@ -117,16 +119,16 @@ const init = async() => {
     console.log (`Server running at: ${server.info.uri}`)
 };
 
-Shows.findByIdAndUpdate(
-    req.params.Shows.id,
-    req.body,
-    { new: true},
-    (err, todo) => {
-        // Handle any possible database errors
-            if (err) return res.status(500).send(err);
-            return res.send(todo);
-        }
-)
+// Shows.findByIdAndUpdate(
+//     req.params.Shows.id,
+//     req.body,
+//     { new: true},
+//     (err, todo) => {
+//         // Handle any possible database errors
+//             if (err) return res.status(500).send(err);
+//             return res.send(todo);
+//         }
+// )
 
 
 
