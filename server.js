@@ -11,27 +11,12 @@ const Users = require ('./users')
 // const Carts = require ('./carts')
 
 
-mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store')
+const promise =mongoose.connect('mongodb://guest:passw0rd@ds235243.mlab.com:35243/team-this-store',{useMongoClient: true})
 
 mongoose.connection.once('open', () => {
     console.log('connected to database')
 })
 
-// const newItem = async(something) => {
-//     const result = req.payload
-//     let {name, price, description, genre} = req.payload;
-//     result.name = something.name;
-//     result.price = something.price;
-//     result.description = something.description;
-//     result.genre = something.genre;
-//     const show = new Show({
-//         name,
-//         price,
-//         description,
-//         genre
-//     });
-//    return show.save();
-// }
 
 const init = async() => {
     server.route([
