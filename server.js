@@ -93,6 +93,31 @@ const init = async() => {
             }
         },
         {
+            method: 'PUT',
+            path: '/users/{id}',
+            handler: (request, h) => {
+                const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
+                    if(err){return h(err).code(404)}
+
+                })
+                const foundUser = Users.findById(request.params.id, (err, data)=>{
+                    if(err){return h(err).code(404)}
+                })
+                return foundUser;
+            }
+
+        },
+        {
+            method: 'GET',
+            path: '/users/{id}',
+            handler: (request, h) => {
+                const foundUser = Users.findById(request.params.id, (err, data)=>{
+                    if(err){return h(err).code(404)}
+                })
+                return foundUser;
+            }
+        },
+        {
             method: 'DELETE',
             path: '/users/{id}',
             handler: (request, h) => {
