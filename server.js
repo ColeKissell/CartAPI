@@ -82,7 +82,17 @@ const init = async() => {
                 return Users.find();
             }
         },
-
+        //get users by id
+        {
+            method: 'GET',
+            path: '/users/{id}',
+            handler: (request, h) => {
+                const foundUser = Users.findById(request.params.id, (err, data)=>{
+                    if(err){return h(err).code(404)}
+                })
+                return foundUser;
+            }
+        },
         // create a new user in the database
         {
             method: 'POST',
@@ -102,6 +112,7 @@ const init = async() => {
                return user.save();
             }
         },
+        //update users by id
         {
             method: 'PUT',
             path: '/users/{id}',
@@ -117,16 +128,7 @@ const init = async() => {
             }
 
         },
-        {
-            method: 'GET',
-            path: '/users/{id}',
-            handler: (request, h) => {
-                const foundUser = Users.findById(request.params.id, (err, data)=>{
-                    if(err){return h(err).code(404)}
-                })
-                return foundUser;
-            }
-        },
+        // delete user by id
         {
             method: 'DELETE',
             path: '/users/{id}',
