@@ -1,6 +1,7 @@
 // required imports
 const hapi = require('hapi');
 const mongoose = require('mongoose');
+// const passport = require('passport')
 
 
 // setting up mongoose
@@ -23,6 +24,9 @@ const Shows = require ('./models/shows')
 const Users = require ('./models/users')
 // const Carts = require ('./models/carts')
 // const ObjectId = mongoose.Types.ObjectId;
+// const login = require('./models/login')
+
+// passport.initialize()
 
 // behavior for the server on start up
 const init = async() => {
@@ -120,6 +124,9 @@ const init = async() => {
                 return foundUser;
             }
         },
+        
+        
+        
         // create a new user in the database
         {
             method: 'POST',
@@ -128,7 +135,6 @@ const init = async() => {
                 const {Role, Username, Email, Password, Payment, Cart, History} = request.payload;
                 const user = new Users ({
                     Role,
-                    Username,
                     Email,
                     Password,
                     Payment,

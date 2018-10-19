@@ -5,7 +5,6 @@ require ('mongoose-type-email')
 
 const UsersSchema = new Schema ({
     Role: {type:  [String] , required: true},
-	Username:{type: String, required: true},
 	Email: {type: mongoose.SchemaTypes.Email, required: true},
     FirstName: String,
     LastName: String,

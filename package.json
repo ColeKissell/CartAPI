@@ -16,6 +16,7 @@
     "joi": "^14.0.0",
     "mongoose": "^4.0.0",
     "mongoose-type-email": "^1.0.9",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "passport": "^0.4.0"
   }
 }
