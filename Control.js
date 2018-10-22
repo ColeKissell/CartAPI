@@ -45,10 +45,12 @@ const updateShow = (request) => {
 
 // new user
 const newUser = (request) => {
-    const {Role, Email, Password, Payment, Cart, History} = request.payload;
+    const {Role, Email, FirstName, LastName, Password, Payment, Cart, History} = request.payload;
     const user = new Users ({
         Role,
         Email,
+        FirstName,
+        LastName,
         Password,
         Payment,
         Cart,
@@ -59,8 +61,10 @@ const newUser = (request) => {
 
 // update user by id return updated user
 const updateUser = (request) => {
-    const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, errors(err))
-    const foundUser = Users.findById(request.params.id, errors(err))
+    const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
+        if(err){return reply(err).code(404)}})
+    const foundUser = Users.findById(request.params.id, (err, data)=>{
+        if(err){return reply(err).code(404)}})
     return foundUser;
 }
 

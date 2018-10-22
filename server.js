@@ -106,23 +106,12 @@ const init = async() => {
                 return controls.findTheId(Users, request.params.id, reply)
             }
         },
-        
         // create a new user in the database
         {
             method: 'POST',
             path: '/users',
             handler: (request, reply) => {
-                const {Role, Username, Email, Password, Payment, Cart, History} = request.payload;
-                const user = new Users ({
-                    Role,
-                    Email,
-                    Password,
-                    Payment,
-                    Cart,
-                    History
-                }); 
-                console.log(user)
-               return user.save();
+                return controls.newUser(request)
             }
         },
         //update users by id
@@ -130,13 +119,7 @@ const init = async() => {
             method: 'PUT',
             path: '/users/{id}',
             handler: (request, reply) => {
-                const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                const foundUser = Users.findById(request.params.id, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                return foundUser;
+                return controls.updateUser(request)
             }
 
         },
@@ -145,11 +128,7 @@ const init = async() => {
             method: 'DELETE',
             path: '/users/{id}',
             handler: (request, reply) => {
-                const foundUser = Users.findByIdAndRemove( request.params.id,(err,Users)=>
-                {if(err){return reply(err).code(404)} })
-                    
-                return foundUser && 'User has been deleted!'
-            
+                return controls.deleteTheThing(Users, request.params.id)
             }
         },
         
