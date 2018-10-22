@@ -173,9 +173,8 @@ const init = async() => {
             }
         },
         
-
-// Server stuff
     ]);
+    // Server stuff
     await server.start((err)=>{
         if(err){throw err;}
         console.log(`server is running at port ${server.info.port}`)
