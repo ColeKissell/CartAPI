@@ -26,14 +26,43 @@ const deleteTheThing = (thing, id) => {
     return thingToDelete && 'Item has been deleted'
 }
 // new show
-
-// update show by id
-
+const newShow = (request) => {
+    const {Name, Price, Description, Genre} = request.payload;
+    const show = new Shows ({
+        Name,
+        Price,
+        Description,
+        Genre
+    }); 
+    return show.save();
+}
+// update show by id return the updated show
+const updateShow = (request) => {
+    const updatedShow = Shows.findByIdAndUpdate(request.params.id, request.payload, errors(err))
+    const foundShow = Shows.findById(request.params.id, errors(err))
+    return foundShow;
+}
 
 // new user
+const newUser = (request) => {
+    const {Role, Email, Password, Payment, Cart, History} = request.payload;
+    const user = new Users ({
+        Role,
+        Email,
+        Password,
+        Payment,
+        Cart,
+        History
+    }); 
+    return user.save();
+}
 
-// update user by id
-
+// update user by id return updated user
+const updateUser = (request) => {
+    const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, errors(err))
+    const foundUser = Users.findById(request.params.id, errors(err))
+    return foundUser;
+}
 
 // new cart
 
@@ -44,5 +73,9 @@ const deleteTheThing = (thing, id) => {
 module.exports = {
     findAllThings,
     findTheId,
-    deleteTheThing
+    deleteTheThing,
+    newShow,
+    updateShow,
+    newUser,
+    updateUser
 }
