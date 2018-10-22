@@ -54,9 +54,9 @@ const init = async() => {
         {
             method: 'GET',
             path: '/shows/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const foundShow = Shows.findById(request.params.id, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 return foundShow;
             }
@@ -65,7 +65,7 @@ const init = async() => {
         {
             method: 'POST',
             path: '/shows',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const {Name, Price, Description, Genre} = request.payload;
                 const show = new Shows ({
                     Name,
@@ -81,12 +81,12 @@ const init = async() => {
         {
             method: 'PUT',
             path: '/shows/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const updatedShow = Shows.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 const foundShow = Shows.findById(request.params.id, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 return foundShow;
             }
@@ -96,9 +96,9 @@ const init = async() => {
         {
             method: 'DELETE',
             path: '/shows/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const foundShow = Shows.findByIdAndRemove( request.params.id,(err,Shows)=>
-                {if(err){return h(err).code(404)} })
+                {if(err){return reply(err).code(404)} })
                     
                 return foundShow && 'Show has been deleted!'
             
@@ -117,9 +117,9 @@ const init = async() => {
         {
             method: 'GET',
             path: '/users/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const foundUser = Users.findById(request.params.id, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 return foundUser;
             }
@@ -131,7 +131,7 @@ const init = async() => {
         {
             method: 'POST',
             path: '/users',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const {Role, Username, Email, Password, Payment, Cart, History} = request.payload;
                 const user = new Users ({
                     Role,
@@ -149,12 +149,12 @@ const init = async() => {
         {
             method: 'PUT',
             path: '/users/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 const foundUser = Users.findById(request.params.id, (err, data)=>{
-                    if(err){return h(err).code(404)}
+                    if(err){return reply(err).code(404)}
                 })
                 return foundUser;
             }
@@ -164,9 +164,9 @@ const init = async() => {
         {
             method: 'DELETE',
             path: '/users/{id}',
-            handler: (request, h) => {
+            handler: (request, reply) => {
                 const foundUser = Users.findByIdAndRemove( request.params.id,(err,Users)=>
-                {if(err){return h(err).code(404)} })
+                {if(err){return reply(err).code(404)} })
                     
                 return foundUser && 'User has been deleted!'
             
