@@ -1,6 +1,8 @@
 // required imports
 const hapi = require('hapi');
 const mongoose = require('mongoose');
+const controls = require ('./Control')
+// import {findAllThings, findTheId, deleteTheThing, newShow, updateShow ,newUser, updateUser} from './Control'
 // const passport = require('passport')
 
 
@@ -47,7 +49,7 @@ const init = async() => {
             method: 'GET',
             path: '/shows',
             handler: (req, reply) => {
-                return Shows.find();
+                return controls.findAllThings(Shows)
             }
         },
         //get shows by id
@@ -55,10 +57,7 @@ const init = async() => {
             method: 'GET',
             path: '/shows/{id}',
             handler: (request, reply) => {
-                const foundShow = Shows.findById(request.params.id, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                return foundShow;
+                return controls.findTheId(Shows, request.params.id, reply);
             }
         },
         // create a new show in the database
@@ -66,15 +65,7 @@ const init = async() => {
             method: 'POST',
             path: '/shows',
             handler: (request, reply) => {
-                const {Name, Price, Description, Genre} = request.payload;
-                const show = new Shows ({
-                    Name,
-                    Price,
-                    Description,
-                    Genre
-                }); 
-                console.log(show)
-               return show.save();
+            return controls.newShow(request);
             }
         },
         //update Shows by id
@@ -82,13 +73,7 @@ const init = async() => {
             method: 'PUT',
             path: '/shows/{id}',
             handler: (request, reply) => {
-                const updatedShow = Shows.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                const foundShow = Shows.findById(request.params.id, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                return foundShow;
+                return controls.updateShow(request);
             }
 
         },
@@ -97,11 +82,11 @@ const init = async() => {
             method: 'DELETE',
             path: '/shows/{id}',
             handler: (request, reply) => {
-                const foundShow = Shows.findByIdAndRemove( request.params.id,(err,Shows)=>
-                {if(err){return reply(err).code(404)} })
+                // const foundShow = Shows.findByIdAndRemove( request.params.id,(err,Shows)=>
+                // {if(err){return reply(err).code(404)} })
                     
-                return foundShow && 'Show has been deleted!'
-            
+                // return foundShow && 'Show has been deleted!'
+                return controls.deleteTheThing(Shows, request.params.id)
             }
         },
 // USERS 
@@ -110,7 +95,7 @@ const init = async() => {
             method: 'GET',
             path: '/users',
             handler: (req, reply) => {
-                return Users.find();
+                return controls.findAllThings(Users);
             }
         },
         //get users by id
@@ -118,14 +103,9 @@ const init = async() => {
             method: 'GET',
             path: '/users/{id}',
             handler: (request, reply) => {
-                const foundUser = Users.findById(request.params.id, (err, data)=>{
-                    if(err){return reply(err).code(404)}
-                })
-                return foundUser;
+                return controls.findTheId(Users, request.params.id, reply)
             }
         },
-        
-        
         
         // create a new user in the database
         {
