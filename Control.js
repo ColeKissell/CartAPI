@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const Shows = require ('./models/shows')
 const Users = require ('./models/users')
+const Carts = require('./models/carts')
+
 
 // find all of a collection
 const findAllThings = (things) => {
@@ -23,6 +25,7 @@ const deleteTheThing = (thing, id) => {
     })
     return thingToDelete && 'Item has been deleted'
 }
+
 // new show
 const newShow = (request) => {
     const {name, price, description, genre} = request.payload;
@@ -69,9 +72,23 @@ const updateUser = (request) => {
 }
 
 // new cart
-
+const newCart = (request) => {
+    const {ProductsInCart, Subtotal, Total} = request.payload;
+    const cart = new Carts ({
+        ProductsInCart,
+        Subtotal,
+        Total,
+    }); 
+    return cart.save();
+}
 // update cart
-
+const updateCart = (request) => {
+    const updatedCart = Carts.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
+        if(err){return reply(err).code(404)}})
+    const foundCart = Carts.findById(request.params.id, (err, data)=>{
+        if(err){return reply(err).code(404)}})
+    return foundCart;
+}
 
 // export all functions
 module.exports = {
@@ -81,5 +98,7 @@ module.exports = {
     newShow,
     updateShow,
     newUser,
-    updateUser
+    updateUser,
+    newCart,
+    updateCart
 }

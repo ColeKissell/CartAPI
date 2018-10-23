@@ -2,7 +2,6 @@
 const hapi = require('hapi');
 const mongoose = require('mongoose');
 const controls = require ('./Control')
-// import {findAllThings, findTheId, deleteTheThing, newShow, updateShow ,newUser, updateUser} from './Control'
 // const passport = require('passport')
 
 
@@ -24,7 +23,7 @@ const server = hapi.server({
 // setting up the required schemas and modles in this file
 const Shows = require ('./models/shows')
 const Users = require ('./models/users')
-// const Carts = require ('./models/carts')
+const Carts = require ('./models/carts')
 // const ObjectId = mongoose.Types.ObjectId;
 // const login = require('./models/login')
 
@@ -132,6 +131,48 @@ const init = async() => {
             }
         },
         
+// Carts
+                //get the carts
+                {
+                    method: 'GET',
+                    path: '/carts',
+                    handler: (req, reply) => {
+                        return controls.findAllThings(Carts);
+                    }
+                },
+                //get cart by id
+                {
+                    method: 'GET',
+                    path: '/carts/{id}',
+                    handler: (request, reply) => {
+                        return controls.findTheId(Carts, request.params.id, reply)
+                    }
+                },
+                // create a new cart in the database
+                {
+                    method: 'POST',
+                    path: '/carts',
+                    handler: (request, reply) => {
+                        return controls.newCart(request)
+                    }
+                },
+                //update cart by id
+                {
+                    method: 'PUT',
+                    path: '/carts/{id}',
+                    handler: (request, reply) => {
+                        return controls.updateCart(request)
+                    }
+        
+                },
+                // delete cart by id
+                {
+                    method: 'DELETE',
+                    path: '/carts/{id}',
+                    handler: (request, reply) => {
+                        return controls.deleteTheThing(Carts, request.params.id)
+                    }
+                },
     ]);
     // Server stuff
     await server.start((err)=>{
