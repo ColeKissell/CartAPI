@@ -15,11 +15,13 @@ mongoose.connection.on('err', (err) => {
     console.log('failed to connect to database',err)
 })
 
+
 // Starting the hapi server
 const server = hapi.server({
     port: 3000,
     host: 'localhost',
-    cors: true
+    routes: {cors:true}
+    
 })
 
 // setting up the required schemas and modles in this file
