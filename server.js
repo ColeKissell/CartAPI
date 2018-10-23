@@ -11,7 +11,7 @@ mongoose.connection.on('connected', () => {
     console.log('connected to database')
 })
 mongoose.connection.on('err', (err) => {
-    console.log('failed to connect to database',err)
+    console.log('failed to connect to database', err)
 })
 
 
@@ -75,7 +75,7 @@ const init = async() => {
             method: 'PUT',
             path: '/shows/{id}',
             handler: (request, reply) => {
-                return controls.updateShow(request);
+                return controls.updateShow(request, reply);
             }
 
         },
@@ -88,7 +88,7 @@ const init = async() => {
                 // {if(err){return reply(err).code(404)} })
                     
                 // return foundShow && 'Show has been deleted!'
-                return controls.deleteTheThing(Shows, request.params.id)
+                return controls.deleteTheThing(Shows, request.params.id, reply)
             }
         },
 // USERS 
@@ -121,7 +121,7 @@ const init = async() => {
             method: 'PUT',
             path: '/users/{id}',
             handler: (request, reply) => {
-                return controls.updateUser(request)
+                return controls.updateUser(request, reply)
             }
 
         },
@@ -130,7 +130,7 @@ const init = async() => {
             method: 'DELETE',
             path: '/users/{id}',
             handler: (request, reply) => {
-                return controls.deleteTheThing(Users, request.params.id)
+                return controls.deleteTheThing(Users, request.params.id, reply)
             }
         },
         
@@ -156,7 +156,7 @@ const init = async() => {
                     method: 'POST',
                     path: '/carts',
                     handler: (request, reply) => {
-                        return controls.newCart(request)
+                        return controls.newCart(request,reply)
                     }
                 },
                 //update cart by id
@@ -164,7 +164,7 @@ const init = async() => {
                     method: 'PUT',
                     path: '/carts/{id}',
                     handler: (request, reply) => {
-                        return controls.updateCart(request)
+                        return controls.updateCart(request,reply)
                     }
         
                 },
@@ -173,7 +173,7 @@ const init = async() => {
                     method: 'DELETE',
                     path: '/carts/{id}',
                     handler: (request, reply) => {
-                        return controls.deleteTheThing(Carts, request.params.id)
+                        return controls.deleteTheThing(Carts, request.params.id, reply)
                     }
                 },
     ]);

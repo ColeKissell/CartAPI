@@ -19,7 +19,7 @@ const findTheId = (things, id, reply) => {
     return foundThing;
 }
 // delete by id
-const deleteTheThing = (thing, id) => {
+const deleteTheThing = (thing, id, reply) => {
     const thingToDelete = thing.findByIdAndRemove(id, (err, data)=>{
         if(err){return reply(err).code(404)}
     })
@@ -38,7 +38,7 @@ const newShow = (request) => {
     return show.save();
 }
 // update show by id return the updated show
-const updateShow = (request) => {
+const updateShow = (request, reply) => {
     const updatedShow = Shows.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
         if(err){return reply(err).code(404)}})
     const foundShow = Shows.findById(request.params.id, (err, data)=>{
@@ -63,7 +63,7 @@ const newUser = (request) => {
 }
 
 // update user by id return updated user
-const updateUser = (request) => {
+const updateUser = (request, reply) => {
     const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
         if(err){return reply(err).code(404)}})
     const foundUser = Users.findById(request.params.id, (err, data)=>{
@@ -82,7 +82,7 @@ const newCart = (request) => {
     return cart.save();
 }
 // update cart
-const updateCart = (request) => {
+const updateCart = (request, reply) => {
     const updatedCart = Carts.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
         if(err){return reply(err).code(404)}})
     const foundCart = Carts.findById(request.params.id, (err, data)=>{
