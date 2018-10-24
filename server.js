@@ -164,9 +164,8 @@ const init = async() => {
                     method: 'PUT',
                     path: '/carts/{id}',
                     handler: (request, reply) => {
-                        return controls.updateCart(request,reply)
+                        return controls.updateCart(request)
                     }
-        
                 },
                 // delete cart by id
                 {
@@ -175,7 +174,7 @@ const init = async() => {
                     handler: (request, reply) => {
                         return controls.deleteTheThing(Carts, request.params.id, reply)
                     }
-                },
+                }
     ]);
     // Server stuff
     await server.start((err)=>{

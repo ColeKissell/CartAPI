@@ -61,7 +61,6 @@ const newUser = (request) => {
     }); 
     return user.save();
 }
-
 // update user by id return updated user
 const updateUser = (request, reply) => {
     const updatedUser = Users.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
@@ -70,7 +69,6 @@ const updateUser = (request, reply) => {
         if(err){return reply(err).code(404)}})
     return foundUser;
 }
-
 // new cart
 const newCart = (request) => {
     const {ProductsInCart, Subtotal, Total} = request.payload;
@@ -83,13 +81,31 @@ const newCart = (request) => {
 }
 // update cart
 const updateCart = (request, reply) => {
-    const updatedCart = Carts.findByIdAndUpdate(request.params.id, request.payload, (err, data)=>{
+    const id = request.params.id;
+    let {ProductsInCart, Subtotal, Total} = request.payload;
+    const subtotal = findSubtotal(ProductsInCart);
+    const finalTotal = addTax(subtotal);
+    Subtotal = subtotal;
+    Total = finalTotal;
+    const updatedCart = Carts.findByIdAndUpdate(id, {ProductsInCart, Subtotal, Total}, (err, data)=>{
         if(err){return reply(err).code(404)}})
-    const foundCart = Carts.findById(request.params.id, (err, data)=>{
+    const foundCart = Carts.findById(id, (err, data)=>{
         if(err){return reply(err).code(404)}})
     return foundCart;
 }
-
+// find subtotal
+const findSubtotal = (ProductsInCart) =>{
+    const start= 0;
+    const subtotal = ProductsInCart.reduce((accumulator, currentValue) => {return accumulator + currentValue.price}, start);
+    return subtotal;
+}
+//add tax to subtotal
+const addTax = (subtotal) =>{
+    const taxPercentAsDecimal = 0.08
+    const taxAmount = subtotal * taxPercentAsDecimal;
+    const total = subtotal + taxAmount;
+    return total;
+}
 // export all functions
 module.exports = {
     findAllThings,
