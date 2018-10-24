@@ -4,8 +4,9 @@ const Shows = require('./shows')
 
 const CartsSchema = new Schema ({
     ProductsInCart:[],
-	Subtotal:[Number],
-	Total:[Number],
+	Subtotal:Number,
+    Total: Number,
+    AllItemsCount: Number
     // Id: String
 })
 

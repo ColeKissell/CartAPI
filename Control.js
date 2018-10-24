@@ -70,31 +70,47 @@ const updateUser = (request, reply) => {
     return foundUser;
 }
 // new cart
-const newCart = (request) => {
-    const {ProductsInCart, Subtotal, Total} = request.payload;
-    const cart = new Carts ({
+const newCart = async (request) => {
+    const {ProductsInCart, Subtotal, Total, AllItemsCount} = request.payload;
+    const updateCart =  await findTotals(request.payload);
+    let cart = new Carts ({
         ProductsInCart,
         Subtotal,
         Total,
+        AllItemsCount
     }); 
-    return cart.save();
+    cart.Subtotal = updateCart.Subtotal;
+    cart.Total = updateCart.Total;
+    cart.AllItemsCount = updateCart.AllItemsCount;
+    return await cart.save();
 }
 // update cart
 const updateCart = (request, reply) => {
     const id = request.params.id;
-    let {ProductsInCart, Subtotal, Total} = request.payload;
-    const subtotal = findSubtotal(ProductsInCart);
-    const finalTotal = addTax(subtotal);
-    Subtotal = subtotal;
-    Total = finalTotal;
-    const updatedCart = Carts.findByIdAndUpdate(id, {ProductsInCart, Subtotal, Total}, (err, data)=>{
+    const updatedStuffForCart = findTotals(request.payload);
+    
+    const updatedCart = Carts.findByIdAndUpdate(id, updatedStuffForCart, (err, data)=>{
         if(err){return reply(err).code(404)}})
     const foundCart = Carts.findById(id, (err, data)=>{
         if(err){return reply(err).code(404)}})
     return foundCart;
 }
+//find totals
+const findTotals = async (payload) => {
+    let {ProductsInCart, Subtotal, Total, AllItemsCount} = payload;
+    Subtotal = await findSubtotal(ProductsInCart);
+    Total = await addTax(Subtotal);
+    AllItemsCount = countItems(ProductsInCart);
+    const update = {
+        ProductsInCart,
+        Subtotal,
+        Total,
+        AllItemsCount
+    }
+    return update
+}
 // find subtotal
-const findSubtotal = (ProductsInCart) =>{
+const findSubtotal = (ProductsInCart) => {
     const start= 0;
     const subtotal = ProductsInCart.reduce((accumulator, currentValue) => {return accumulator + currentValue.price}, start);
     return subtotal;
@@ -106,6 +122,11 @@ const addTax = (subtotal) =>{
     const total = subtotal + taxAmount;
     return total;
 }
+//count items in cart 
+const countItems = (ProductsInCart) => {
+    return ProductsInCart.length;
+}
+
 // export all functions
 module.exports = {
     findAllThings,
